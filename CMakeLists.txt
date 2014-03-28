@@ -3,11 +3,13 @@
 # Author: Florent Lamiraux
 #
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.3)
 
-INCLUDE(cmake/base.cmake)
-INCLUDE(cmake/cpack.cmake)
-INCLUDE(cmake/python.cmake)
+find_package(catkin REQUIRED COMPONENTS sot_cmake sot-core)
+
+INCLUDE(${SOT_CMAKE_DIR}/base.cmake)
+INCLUDE(${SOT_CMAKE_DIR}/cpack.cmake)
+INCLUDE(${SOT_CMAKE_DIR}/python.cmake)
 
 FINDPYTHON ()
 FIND_NUMPY ()
@@ -21,8 +23,10 @@ SET(${PROJECT_NAME}_HEADERS
 )
 
 SETUP_PROJECT()
+catkin_package()
+include_directories(${catkin_INCLUDE_DIRS})
+
 # Trigger dependency to dynamic-graph-python
-ADD_REQUIRED_DEPENDENCY("sot-core >= 2.5")
 # Add dependency to libsot-tools.so library in pkg-config file.
 PKG_CONFIG_APPEND_LIBS("sot-tools")
 
